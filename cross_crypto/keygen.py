@@ -17,6 +17,7 @@ def generateRSAKeys(bits=4096):
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
             ).decode('utf-8')
         }
+    
     except Exception as e:
         print("Error en generateRSAKeys:", str(e))
         raise    

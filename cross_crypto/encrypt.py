@@ -21,7 +21,6 @@ def encryptHybrid(data: dict, PUBLIC_KEY) -> dict:
         aes_key = get_random_bytes(32)
         aes_cipher = AES.new(aes_key, AES.MODE_GCM)
         ciphertext, tag = aes_cipher.encrypt_and_digest(data_str)
-        
         public_key = loadPublicKey(PUBLIC_KEY)
         rsa_cipher = PKCS1_OAEP.new(public_key)
         encrypted_key = rsa_cipher.encrypt(aes_key)
