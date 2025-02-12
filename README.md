@@ -6,6 +6,6 @@ License: MIT
 
 Instalación:
 
-pip install cross-crypto
+pip install cross-crypto-py
 
 
