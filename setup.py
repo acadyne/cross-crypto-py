@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cross-crypto-py",
-    version="1.0.1",
+    version="1.0.2",
     description="Biblioteca de cifrado híbrido para la comunicación segura entre TypeScript y Python utilizando AES-GCM (256 bits) y RSA-OAEP (4096 bits).",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
