@@ -1,49 +1,150 @@
-# 🚀 Cross Crypto Py 🐍🔒  
-**Encriptación híbrida segura entre Python y TypeScript (AES-GCM + RSA-OAEP).**  
+# 🚀 Cross Crypto Py 🐍🔒
 
-## 📌 Introducción  
-Cross Crypto Py es una librería de encriptación híbrida que combina **AES-GCM** para cifrado simétrico y **RSA-OAEP** para el intercambio seguro de claves. Su principal ventaja es la interoperabilidad entre **Python** y **TypeScript**, permitiendo cifrar datos en un lenguaje y descifrarlos en el otro sin problemas.  
+![PyPI](https://img.shields.io/pypi/v/cross-crypto-py) ![License](https://img.shields.io/github/license/acadyne/cross-crypto-py) ![Python Versions](https://img.shields.io/pypi/pyversions/cross-crypto-py) ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 
-## 🛠️ Uso  
+**Encriptación híbrida segura entre Python, TypeScript y Rust (AES-GCM + RSA-OAEP)**
+
+---
+
+## 📌 Introducción
+
+**Cross Crypto Py** es una librería de encriptación híbrida que combina **AES-GCM** para cifrado simétrico y **RSA-OAEP** para intercambio seguro de claves. Su ventaja clave es la **interoperabilidad total** entre Python, JavaScript/TypeScript y Rust.
+
+> Cifra datos en un lenguaje y descífralos en otro, con soporte para JSON, objetos serializados (`dill`) y archivos binarios (`PDF`, imágenes, etc).
+
+---
+
+## 🛠️ Uso básico (modo JSON)
 
 ```python
-from cross_crypto.keygen import generateRSAKeys
-from cross_crypto.encrypt import encryptHybrid
-from cross_crypto.decrypt import decryptHybrid
+from cross_crypto_py.keygen import generateRSAKeys
+from cross_crypto_py.encrypt import encryptHybrid
+from cross_crypto_py.decrypt import decryptHybrid
 
-# 🔑 Generar un par de claves RSA de 4096 bits
+# 🔑 Generar claves RSA
 keys = generateRSAKeys()
 publicKey = keys["publicKey"]
 privateKey = keys["privateKey"]
 
-# 📩 Datos a encriptar
+# 📩 Datos simples
 data = { "mensaje": "Hola AcaDyne desde Python" }
 
-# 🔒 Encriptación (Cross Crypto)
+# 🔒 Encriptar con modo JSON (por defecto)
 encrypted = encryptHybrid(data, publicKey)
-print("\n🛡️ Datos Encriptados:", encrypted)
+print("🛡️ Encriptado:", encrypted)
 
-# 🔓 Desencriptación (Cross Crypto)
+# 🔓 Desencriptar
 decrypted = decryptHybrid(encrypted, privateKey)
-print("\n✅ Datos Desencriptados:", decrypted)
+print("✅ Desencriptado:", decrypted)
 ```
+
+---
+
+## 💡 Uso avanzado
+
+### 🔹 Objetos complejos (`mode="dill"`)
+
+```python
+from cross_crypto_py.encrypt import encryptHybrid
+from cross_crypto_py.decrypt import decryptHybrid
+
+objeto_complejo = {"clase": MiClase(), "config": {"x": 1}}
+encrypted = encryptHybrid(objeto_complejo, publicKey, mode="dill")
+decrypted = decryptHybrid(encrypted, privateKey, mode="dill")
+```
+
+### 🔸 Archivos binarios (`mode="binary"`)
+
+```python
+with open("imagen.png", "rb") as f:
+    contenido = f.read()
+
+encrypted = encryptHybrid(contenido, publicKey, mode="binary")
+decrypted = decryptHybrid(encrypted, privateKey, mode="binary")
+
+with open("imagen_recuperada.png", "wb") as f:
+    f.write(decrypted)
+```
+
+---
+
+## 📁 Cifrado híbrido de archivos (`encryptFileHybrid`)
+
+```python
+from cross_crypto_py.file_crypto import encryptFileHybrid, decryptFileHybrid
+
+# 🔒 Encriptar uno o varios archivos/carpetas como ZIP
+encrypted = encryptFileHybrid(
+    paths=["datos/", "documento.pdf"],
+    public_key=publicKey,
+    save_file=True,
+    output_enc="datos.enc"
+)
+
+# 🔓 Desencriptar archivo .enc y extraer archivos ZIP
+output_dir = decryptFileHybrid("datos.enc", privateKey)
+print("Archivos restaurados en:", output_dir)
+```
+
+---
+
+## 🧬 Modo streaming para archivos grandes
+
+```python
+# Encriptar archivo grande (streaming)
+encrypted = encryptHybrid("video.mp4", publicKey, stream=True)
+
+# Desencriptar archivo grande (streaming)
+output_path = decryptHybrid(
+    encrypted,
+    privateKey,
+    stream=True,
+    decrypted_output_path="video_restaurado.mp4"
+)
+```
+
+> ✅ Este modo evita cargar el archivo completo en memoria. Ideal para videos, backups, etc.
+
+---
+
 ## 🎯 Características
-✅ Encriptación híbrida: AES-GCM + RSA-OAEP
-✅ Interoperabilidad total entre Python y TypeScript
-✅ Seguridad avanzada con RSA de 4096 bits
-✅ Ideal para cifrado de datos sensibles
+
+| Característica                                | ✅  |
+| --------------------------------------------- | -- |
+| Encriptación híbrida AES-GCM + RSA-OAEP       | ✔️ |
+| RSA de 4096 bits                              | ✔️ |
+| Interoperabilidad: Python ↔ TypeScript ↔ Rust | ✔️ |
+| Soporte para objetos (`json`, `dill`)         | ✔️ |
+| Soporte para archivos (`binary`)              | ✔️ |
+| Cifrado de carpetas y múltiples archivos      | ✔️ |
+| Modo streaming para archivos grandes          | ✔️ |
+| Encriptación y desencriptación unificadas     | ✔️ |
+
+---
 
 ## 📦 Instalación
 
-### Python
-Instala el paquete con:
-
 ```bash
-$ pip install cross-crypto-py
+pip install cross-crypto-py
 ```
 
-🔗 [PyPI](https://pypi.org/project/cross-crypto-py/)
-🔗 Repositorio de la versión en JavaScript/TypeScript: [Cross Crypto TS](https://github.com/acadyne/cross-crypto-ts)
+---
+
+## 🌐 Ecosistema Cross-Crypto
+
+- 🔷 [Cross Crypto Py (Python)](https://github.com/acadyne/cross-crypto-py)
+- 🔾 [Cross Crypto TS (TypeScript)](https://github.com/acadyne/cross-crypto-ts)
+- 🦀 [Cross Crypto RS (Rust)](https://github.com/acadyne/cross-crypto-rs)
+
+---
+
+## 🧪 Requisitos
+
+- Python ≥ 3.7
+- `pycryptodome`, `dill`
+
+---
 
 ## 📄 Licencia
-Este proyecto se encuentra bajo la licencia MIT.
+
+MIT © Jose Fabian Soltero Escobar

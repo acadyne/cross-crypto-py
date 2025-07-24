@@ -5,8 +5,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cross-crypto-py",
-    version="1.0.2",
-    description="Biblioteca de cifrado híbrido para la comunicación segura entre TypeScript y Python utilizando AES-GCM (256 bits) y RSA-OAEP (4096 bits).",
+    version="1.1.0",
+    description="Cifrado híbrido seguro con interoperabilidad entre lenguajes como Python, TypeScript y Rust, basado en AES-GCM (256 bits) y RSA-OAEP (4096 bits)",
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="Jose Fabian Soltero Escobar",
@@ -52,7 +52,8 @@ setup(
     python_requires=">=3.7",
     install_requires=[
         'cryptography>=40.0.2',
-        'pycryptodome>=3.17'
+        'pycryptodome>=3.17',
+        'dill>=0.3.6'
     ],
     include_package_data=True,
     keywords=[
