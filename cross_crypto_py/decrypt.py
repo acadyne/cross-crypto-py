@@ -2,7 +2,7 @@
 import os
 import json
 import base64
-import dill  # type: ignore
+import dill # type: ignore[reportMissingTypeStubs]
 from typing import Optional, Any, Dict, Union
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES, PKCS1_OAEP

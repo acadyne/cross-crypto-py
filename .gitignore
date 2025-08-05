@@ -144,3 +144,6 @@ poetry.lock
 # Other logs
 *.log
 demos
+
+vento
+venv/

@@ -5,15 +5,18 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cross-crypto-py",
-    version="1.1.0",
+    version="1.1.2",
     description="Cifrado híbrido seguro con interoperabilidad entre lenguajes como Python, TypeScript y Rust, basado en AES-GCM (256 bits) y RSA-OAEP (4096 bits)",
-    long_description=open("README.md", encoding="utf-8").read(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     author="Jose Fabian Soltero Escobar",
     author_email="acadyne@gmail.com",
     url="https://github.com/acadyne/cross-crypto-py",
     license="MIT",
     packages=find_packages(),
+    package_data={
+        "cross_crypto_py": ["*.pyi"], 
+    },    
     classifiers=[
         'Development Status :: 5 - Production/Stable',
 
