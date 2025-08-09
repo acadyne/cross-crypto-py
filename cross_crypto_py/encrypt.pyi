@@ -1,14 +1,13 @@
-# stubs/cross_crypto_py/encrypt.pyi
+from __future__ import annotations
+from typing import Any, Dict, Optional, Union, Literal
+from Crypto.PublicKey import RSA
 
-from typing import Any, Dict, Union, Optional
-from Crypto.PublicKey.RSA import RsaKey
-
-def loadPublicKey(PUBLIC_KEY: str) -> RsaKey: ...
+def loadPublicKey(PUBLIC_KEY: str) -> RSA.RsaKey: ...
 
 def encryptHybrid(
     data: Union[Dict[str, Any], bytes, str],
     PUBLIC_KEY: str,
-    mode: str = ...,
+    mode: Literal["json", "dill", "binary"] = ...,
     stream: bool = ...,
     output_path: Optional[str] = ...,
     chunk_size: int = ...

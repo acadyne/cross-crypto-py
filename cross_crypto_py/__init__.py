@@ -7,7 +7,7 @@ Cross Crypto Py
 Cifrado híbrido AES-GCM + RSA-OAEP con interoperabilidad Python ↔ TS ↔ Rust.
 """
 
-__version__ = "1.1.1"
+__version__ = "1.1.4"
 
 from .keygen import generateRSAKeys
 from .encrypt import loadPublicKey, encryptHybrid

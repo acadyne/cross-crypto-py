@@ -1,6 +1,5 @@
-# stubs/cross_crypto_py/file_crypto.pyi
-
-from typing import List, Dict, Any, Optional
+from __future__ import annotations
+from typing import Any, Dict, List, Optional
 
 def encryptFileHybrid(
     paths: List[str],

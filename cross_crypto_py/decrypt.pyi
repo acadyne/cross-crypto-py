@@ -1,9 +1,8 @@
-# stubs/cross_crypto_py/decrypt.pyi
+from __future__ import annotations
+from typing import Any, Dict, Optional, Union
+from Crypto.PublicKey import RSA
 
-from typing import Any, Dict, Union, Optional
-from Crypto.PublicKey.RSA import RsaKey
-
-def loadPrivateKey(PRIVATE_KEY: str) -> RsaKey: ...
+def loadPrivateKey(PRIVATE_KEY: str) -> RSA.RsaKey: ...
 
 def decryptHybrid(
     encrypted_data: Union[Dict[str, str], str],
