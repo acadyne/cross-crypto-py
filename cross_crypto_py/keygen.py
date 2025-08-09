@@ -1,58 +1,68 @@
 # cross_crypto/keygen.py
 from __future__ import annotations
-
-from typing import Dict, Optional, Union
+from typing import Optional, Union, TypedDict, Literal
 import logging
-
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 
+__all__ = ["generateRSAKeys"]
+
 logger = logging.getLogger(__name__)
+
+class KeyPair(TypedDict):
+    privateKey: str
+    publicKey: str
+
+
+def _to_bytes(s: Optional[Union[str, bytes]]) -> Optional[bytes]:
+    if s is None:
+        return None
+    if isinstance(s, bytes):
+        return s
+    return s.encode("utf-8")
+
 
 def generateRSAKeys(
     bits: int = 4096,
     password: Optional[Union[bytes, str]] = None,
+    *,
+    public_exponent: int = 65537,
+    public_format: Literal["SubjectPublicKeyInfo", "OpenSSH"] = "SubjectPublicKeyInfo",
     verbose: bool = False,
-) -> Dict[str, str]:
+) -> KeyPair:
     """
     Genera un par de claves RSA (privada y pública) en formato PEM (str).
 
     Args:
-        bits: tamaño de clave (mínimo recomendado: 2048). Por defecto 4096.
-        password: si se proporciona, cifra la clave privada (PKCS#8) con la contraseña.
-                  Acepta bytes o str (se codifica en UTF-8 si es str).
-        verbose: si True, loggea información con nivel INFO.
+        bits: tamaño de la clave (mínimo recomendado: 2048).
+        password: passphrase para cifrar la privada. `None` = sin cifrado.
+                  Si es cadena vacía, se tratará como sin cifrar.
+        public_exponent: normalmente 65537.
+        public_format: "SubjectPublicKeyInfo" (PEM tradicional) u "OpenSSH".
+        verbose: loggea un mensaje INFO al finalizar.
 
     Returns:
-        Dict con:
-            - "privateKey": clave privada PEM (PKCS#8) como str (UTF-8).
-            - "publicKey" : clave pública PEM (SubjectPublicKeyInfo) como str (UTF-8).
-
-    Seguridad:
-        - Al pasar `password` como str, se convierte a bytes UTF-8 para el cifrado.
-          Si necesitas control total del encoding, pasa `bytes` directamente.
+        KeyPair con `privateKey` y `publicKey` como PEM (str).
     """
-    if bits < 2048:
-        raise ValueError("El tamaño mínimo recomendado para RSA es 2048 bits.")
+    if bits < 1024:
+        raise ValueError("El tamaño mínimo permitido para RSA es 1024 bits.")
+    elif bits < 2048:
+        logger.warning("El tamaño recomendado para RSA es 2048 bits o más.")
 
     try:
-        # Generación del par
-        private_key = rsa.generate_private_key(public_exponent=65537, key_size=bits)
+        private_key = rsa.generate_private_key(
+            public_exponent=public_exponent,
+            key_size=bits,
+        )
         public_key = private_key.public_key()
 
-        # Normaliza password -> bytes o None
-        enc_password: Optional[bytes]
-        if password is None:
+        enc_password = _to_bytes(password)
+        if enc_password is not None and len(enc_password) == 0:
             enc_password = None
-        elif isinstance(password, str):
-            enc_password = password.encode("utf-8")
-        else:
-            enc_password = password
 
-        # Algoritmo de cifrado para la privada
         encryption_algorithm = (
             serialization.BestAvailableEncryption(enc_password)
-            if enc_password
+            if enc_password is not None
             else serialization.NoEncryption()
         )
 
@@ -62,10 +72,16 @@ def generateRSAKeys(
             encryption_algorithm=encryption_algorithm,
         ).decode("utf-8")
 
-        public_pem = public_key.public_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo,
-        ).decode("utf-8")
+        if public_format == "OpenSSH":
+            public_pem = public_key.public_bytes(
+                encoding=serialization.Encoding.OpenSSH,
+                format=serialization.PublicFormat.OpenSSH,
+            ).decode("utf-8")
+        else:
+            public_pem = public_key.public_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo,
+            ).decode("utf-8")
 
         if verbose:
             logger.info("Claves RSA generadas correctamente (%d bits)", bits)
@@ -73,4 +89,5 @@ def generateRSAKeys(
         return {"privateKey": private_pem, "publicKey": public_pem}
 
     except Exception as e:
+        logger.error("Fallo al generar claves RSA (%d bits): %s", bits, e)
         raise RuntimeError(f"Fallo al generar claves RSA ({bits} bits).") from e

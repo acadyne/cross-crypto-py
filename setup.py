@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cross-crypto-py",
-    version="1.1.4",
+    version="1.2.0",
     description="Cifrado híbrido seguro con interoperabilidad entre lenguajes como Python, TypeScript y Rust, basado en AES-GCM (256 bits) y RSA-OAEP (4096 bits)",
     long_description=long_description,
     long_description_content_type="text/markdown",
