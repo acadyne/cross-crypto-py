@@ -7,11 +7,20 @@ Cross Crypto Py
 Cifrado híbrido AES-GCM + RSA-OAEP con interoperabilidad Python ↔ TS ↔ Rust.
 """
 
-__version__ = "1.2.0"
+__version__ = "2.0.0"
 
 from .keygen import generateRSAKeys
 from .encrypt import loadPublicKey, encryptHybrid
 from .decrypt import loadPrivateKey, decryptHybrid
+from .sign import (
+    canonicalJsonBytes,
+    canonical_json_bytes,
+    generateEd25519Keys,
+    fingerprintBytes,
+    fingerprintPublicKey,
+    signPayload,
+    verifyPayload,
+)
 
 __all__ = [
     "__version__",
@@ -24,6 +33,13 @@ __all__ = [
     "detect_mime_type", "hash_file", # type: ignore[reportUnsupportedDunderAll]
     "collect_metadata", "save_encrypted_json", # type: ignore[reportUnsupportedDunderAll]
     "load_encrypted_json", # type: ignore[reportUnsupportedDunderAll]
+    "canonicalJsonBytes",
+    "canonical_json_bytes",
+    "generateEd25519Keys",
+    "fingerprintBytes",
+    "fingerprintPublicKey",
+    "signPayload",
+    "verifyPayload",
 ] 
 
 def __getattr__(name):

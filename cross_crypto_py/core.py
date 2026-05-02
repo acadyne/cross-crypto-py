@@ -168,8 +168,12 @@ def create_zip_from_paths(
                             continue
 
                         rel = Path(fname).as_posix()
+
                         if single_dir_flat:
-                            arcname = _sanitize_arcname(rel)
+                            if rel_dir_arc == ".":
+                                arcname = _sanitize_arcname(rel)
+                            else:
+                                arcname = _sanitize_arcname(f"{rel_dir_arc}/{rel}")
                         else:
                             arcname = _sanitize_arcname(f"{rel_prefix}/{rel}")
 

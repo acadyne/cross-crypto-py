@@ -1,13 +1,21 @@
 from __future__ import annotations
+
 from typing import Any, Callable, Dict, List, Optional, Union, TypedDict, overload
 from typing_extensions import Literal
 
-__all__ = ["encryptFileHybrid", "decryptFileHybrid", "FileEncryptionError", "FileDecryptionError"]
+__all__ = [
+    "encryptFileHybrid",
+    "decryptFileHybrid",
+    "FileEncryptionError",
+    "FileDecryptionError",
+]
 
 Phase = Literal["zip", "hash", "encrypt", "write", "extract"]
 
+
 class FileEncryptionError(RuntimeError): ...
 class FileDecryptionError(RuntimeError): ...
+
 
 class EncryptedStreamInfoBase(TypedDict, total=False):
     encryptedPath: str
@@ -15,7 +23,11 @@ class EncryptedStreamInfoBase(TypedDict, total=False):
     nonce: str
     tag: str
     mode: Literal["stream"]
+    contentMode: Literal["json", "dill", "binary"]
+    streamFormat: Literal["envelope"]
     aad: Literal["present", "none"]
+    oaepHash: Literal["sha1", "sha256"]
+
 
 class EncryptedMemoryInfoBase(TypedDict, total=False):
     encryptedData: str
@@ -24,6 +36,8 @@ class EncryptedMemoryInfoBase(TypedDict, total=False):
     tag: str
     mode: Literal["json", "dill", "binary"]
     aad: Literal["present", "none"]
+    oaepHash: Literal["sha1", "sha256"]
+
 
 class CommonInfoFields(TypedDict, total=False):
     original_paths: List[str]
@@ -31,11 +45,14 @@ class CommonInfoFields(TypedDict, total=False):
     zip_sha256: str
     meta: Dict[str, Any]
 
+
 class EncryptedStreamInfo(EncryptedStreamInfoBase, CommonInfoFields): ...
 class EncryptedMemoryInfo(EncryptedMemoryInfoBase, CommonInfoFields): ...
+
+
 EncryptedInfo = Union[EncryptedStreamInfo, EncryptedMemoryInfo]
 
-# -------- encryptFileHybrid --------
+
 @overload
 def encryptFileHybrid(
     paths: List[str],
@@ -55,8 +72,9 @@ def encryptFileHybrid(
     aad: Optional[Union[bytes, str, Dict[str, Any]]] = ...,
     signature: Optional[Dict[str, Any]] = ...,
     cleanup_zip: bool = ...,
-    oaep_hash: str = ...,
+    oaep_hash: Literal["sha1", "sha256"] = ...,
 ) -> EncryptedStreamInfo: ...
+
 
 @overload
 def encryptFileHybrid(
@@ -77,8 +95,9 @@ def encryptFileHybrid(
     aad: Optional[Union[bytes, str, Dict[str, Any]]] = ...,
     signature: Optional[Dict[str, Any]] = ...,
     cleanup_zip: bool = ...,
-    oaep_hash: str = ...,
+    oaep_hash: Literal["sha1", "sha256"] = ...,
 ) -> EncryptedMemoryInfo: ...
+
 
 def encryptFileHybrid(
     paths: List[str],
@@ -98,10 +117,10 @@ def encryptFileHybrid(
     aad: Optional[Union[bytes, str, Dict[str, Any]]] = ...,
     signature: Optional[Dict[str, Any]] = ...,
     cleanup_zip: bool = ...,
-    oaep_hash: str = ...,
+    oaep_hash: Literal["sha1", "sha256"] = ...,
 ) -> Dict[str, Any]: ...
 
-# -------- decryptFileHybrid --------
+
 def decryptFileHybrid(
     enc_path: str,
     private_key: Union[str, bytes],
@@ -113,4 +132,6 @@ def decryptFileHybrid(
     overwrite: bool = ...,
     progress_callback: Optional[Callable[[Phase, int, int], None]] = ...,
     cleanup_enc: bool = ...,
+    oaep_hash: Optional[Literal["sha1", "sha256"]] = ...,
+    aad: Optional[Union[bytes, str, Dict[str, Any]]] = ...,
 ) -> str: ...

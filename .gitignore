@@ -147,3 +147,6 @@ demos
 
 vento
 venv/
+.namignore
+analizar_todo.py
+estructura_y_contenido.md
