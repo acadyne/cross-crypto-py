@@ -6,7 +6,7 @@ ROOT = Path(__file__).parent
 
 setup(
     name="cross-crypto-py",
-    version="3.0.0rc4",
+    version="3.0.0",
     description="Cross-Crypto Protocol v3 para interoperabilidad Python con browser/TypeScript/JavaScript.",
     long_description=(ROOT / "README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
@@ -19,7 +19,7 @@ setup(
     python_requires=">=3.9.2",
     install_requires=["cryptography>=45.0.0"],
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Topic :: Security :: Cryptography",
         "Programming Language :: Python :: 3",

@@ -2,7 +2,7 @@
 
 Implementación Python de **Cross-Crypto Protocol v3**.
 
-> Estado actual: `3.0.0rc4`. Release candidate; no promover a estable hasta completar el gate final Python ↔ TypeScript/JavaScript.
+> Estado actual: `3.0.0`. Release estable de Cross-Crypto Protocol v3.
 
 ## Perfil criptográfico
 
@@ -27,7 +27,7 @@ El core v3 usa `cryptography`. `dill` y `pycryptodome` ya no forman parte del pr
 Cuando el RC esté publicado:
 
 ```bash
-pip install "cross-crypto-py==3.0.0rc4"
+pip install "cross-crypto-py==3.0.0"
 ```
 
 Desde este checkout:
@@ -229,4 +229,4 @@ La preparación del release estable está documentada en:
 - [`docs/RELEASE_NOTES_3_0_0.md`](docs/RELEASE_NOTES_3_0_0.md)
 - [`docs/PUBLISHING.md`](docs/PUBLISHING.md)
 
-`3.0.0rc4` continúa siendo la candidata vigente hasta completar `deep` y el gate final.
+`3.0.0` es la release estable promovida después de completar los gates de release.

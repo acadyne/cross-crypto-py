@@ -1,6 +1,6 @@
 """Cross-Crypto Protocol v3 — implementación Python."""
 
-__version__ = "3.0.0rc4"
+__version__ = "3.0.0"
 
 from .errors import CrossCryptoError, CrossCryptoErrorCode
 from .ccenc import (
