@@ -2,7 +2,7 @@
 
 Implementación Python de **Cross-Crypto Protocol v3**.
 
-> Estado actual: `3.0.0rc3`. Release candidate; no promover a estable hasta completar el gate final Python ↔ TypeScript/JavaScript.
+> Estado actual: `3.0.0rc4`. Release candidate; no promover a estable hasta completar el gate final Python ↔ TypeScript/JavaScript.
 
 ## Perfil criptográfico
 
@@ -19,7 +19,7 @@ El core v3 usa `cryptography`. `dill` y `pycryptodome` ya no forman parte del pr
 
 ## Requisitos
 
-- Python >= 3.9
+- Python >= 3.9.2
 - `cryptography >= 45`
 
 ## Instalación
@@ -27,7 +27,7 @@ El core v3 usa `cryptography`. `dill` y `pycryptodome` ya no forman parte del pr
 Cuando el RC esté publicado:
 
 ```bash
-pip install "cross-crypto-py==3.0.0rc3"
+pip install "cross-crypto-py==3.0.0rc4"
 ```
 
 Desde este checkout:
@@ -219,3 +219,14 @@ MIT
 
 La matriz objetivo y la política de compatibilidad están en [`docs/RUNTIME_SUPPORT.md`](docs/RUNTIME_SUPPORT.md). La CI prueba múltiples versiones y mantiene separados los conceptos “compatible por metadata” y “probado por matriz”.
 
+
+
+## Release 3.0.0
+
+La preparación del release estable está documentada en:
+
+- [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md)
+- [`docs/RELEASE_NOTES_3_0_0.md`](docs/RELEASE_NOTES_3_0_0.md)
+- [`docs/PUBLISHING.md`](docs/PUBLISHING.md)
+
+`3.0.0rc4` continúa siendo la candidata vigente hasta completar `deep` y el gate final.

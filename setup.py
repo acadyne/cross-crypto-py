@@ -16,7 +16,7 @@ setup(
     license="MIT",
     packages=find_packages(),
     package_data={"cross_crypto_py": ["py.typed"]},
-    python_requires=">=3.9",
+    python_requires=">=3.9.2",
     install_requires=["cryptography>=45.0.0"],
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -28,8 +28,8 @@ setup(
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Typing :: Typed",
-        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
 )
