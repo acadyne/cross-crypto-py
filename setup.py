@@ -1,83 +1,35 @@
-from setuptools import setup, find_packages
+from pathlib import Path
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+from setuptools import find_packages, setup
+
+ROOT = Path(__file__).parent
 
 setup(
     name="cross-crypto-py",
-    version="2.0.0",
-    description="Cifrado híbrido AES-GCM + RSA-OAEP con firma Ed25519 e interoperabilidad entre Python, TypeScript y Rust",
-    long_description=long_description,
+    version="3.0.0rc4",
+    description="Cross-Crypto Protocol v3 para interoperabilidad Python con browser/TypeScript/JavaScript.",
+    long_description=(ROOT / "README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
     author="Jose Fabian Soltero Escobar",
     author_email="acadyne@gmail.com",
     url="https://github.com/acadyne/cross-crypto-py",
     license="MIT",
     packages=find_packages(),
-    package_data={
-        "cross_crypto_py": ["*.pyi"], 
-    },    
+    package_data={"cross_crypto_py": ["py.typed"]},
+    python_requires=">=3.9",
+    install_requires=["cryptography>=45.0.0"],
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
-
-        # Audiencia y propósito
-        'Intended Audience :: Developers',
-        'Intended Audience :: System Administrators',
-        'Topic :: Security',
-        'Topic :: Security :: Cryptography',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-
-        # Licencia
-        'License :: OSI Approved :: MIT License',
-
-        # Versiones de Python soportadas
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
-        'Programming Language :: Python :: 3.12',
-
-        # Interoperabilidad
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: JavaScript',
-        'Framework :: AsyncIO',
-
-        # Sistemas operativos
-        'Operating System :: OS Independent',
-
-        # Características especiales
-        'Environment :: Web Environment',
-        'Natural Language :: English',
-        'Typing :: Typed'
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Topic :: Security :: Cryptography",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Typing :: Typed",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
     ],
-    python_requires=">=3.7",
-    install_requires=[
-        'cryptography>=40.0.2',
-        'pycryptodome>=3.17',
-        'dill>=0.3.6'
-    ],
-    include_package_data=True,
-    keywords=[
-        "encryption",
-        "cryptography",
-        "security",
-        "typescript",
-        "python",
-        "rsa",
-        "aes",
-        "hybrid-encryption",
-        "cross-platform",
-        "secure-communication",
-        "data-protection",
-        "crypto",
-        "gcm",
-        "oaep"
-    ],
-    project_urls={
-    'Documentation': 'https://github.com/acadyne/cross-crypto-py#readme',
-    'Source': 'https://github.com/acadyne/cross-crypto-py',
-    'Tracker': 'https://github.com/acadyne/cross-crypto-py/issues',
-    },
 )

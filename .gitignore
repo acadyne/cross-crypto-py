@@ -150,3 +150,5 @@ venv/
 .namignore
 analizar_todo.py
 estructura_y_contenido.md
+CHANGELOG.md
+docs

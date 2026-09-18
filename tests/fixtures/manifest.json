@@ -1,0 +1,23 @@
+{
+  "protocolVersion": 3,
+  "rsaKid": "u26Pogkrv8YudW7brNTiUuq7mg1T7A4x71I4PUbm4ZM",
+  "ed25519Kid": "laWau7qCPL9vI3T-ZP_hMBb_NS9JptwbM6QlvXE3wec",
+  "aad": "route:/v3/test",
+  "payload": {
+    "message": "cross-language 🌊",
+    "n": 42,
+    "nested": {
+      "ok": true
+    }
+  },
+  "fixtures": [
+    "python_jwe.json",
+    "python_jws.json",
+    "python_ccenc.bin",
+    "typescript_jwe.json",
+    "typescript_jws.json",
+    "typescript_ccenc.bin",
+    "ccenc_plain.bin"
+  ],
+  "scope": "python-typescript-javascript"
+}

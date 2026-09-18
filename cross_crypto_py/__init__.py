@@ -1,76 +1,101 @@
-# cross_crypto_py/__init__.py
+"""Cross-Crypto Protocol v3 — implementación Python."""
 
-"""
-Cross Crypto Py
-===============
+__version__ = "3.0.0rc4"
 
-Cifrado híbrido AES-GCM + RSA-OAEP con interoperabilidad Python ↔ TS ↔ Rust.
-"""
-
-__version__ = "2.0.0"
-
-from .keygen import generateRSAKeys
-from .encrypt import loadPublicKey, encryptHybrid
-from .decrypt import loadPrivateKey, decryptHybrid
-from .sign import (
-    canonicalJsonBytes,
-    canonical_json_bytes,
-    generateEd25519Keys,
-    fingerprintBytes,
-    fingerprintPublicKey,
-    signPayload,
-    verifyPayload,
+from .errors import CrossCryptoError, CrossCryptoErrorCode
+from .ccenc import (
+    decrypt_ccenc_bytes,
+    decrypt_file,
+    encrypt_ccenc_bytes,
+    encrypt_file,
+    read_ccenc_header,
+    read_ccenc_file_header,
+)
+from .json_api import (
+    decrypt_json,
+    decrypt_text,
+    encrypt_json,
+    encrypt_text,
+    sign_json,
+    sign_text,
+    verify_json,
+    verify_text,
+)
+from .jwe import decrypt_bytes, encrypt_bytes, read_jwe_protected_header
+from .jws import (
+    is_valid_signature,
+    read_jws_protected_header,
+    sign_bytes,
+    verify_bytes,
+)
+from .keys import (
+    generate_ed25519_key_pair,
+    generate_rsa_key_pair,
+    key_id_from_public_key,
+)
+from .types import (
+    JWE_ALG,
+    JWE_ENC,
+    JWE_TYP,
+    JWS_ALG,
+    JWS_TYP,
+    PROTOCOL_VERSION,
+    CcencDecryptResult,
+    CcencHeader,
+    DecryptResult,
+    JweEnvelope,
+    JweProtectedHeader,
+    JwsEnvelope,
+    JwsProtectedHeader,
+    KeyPair,
+    RsaKeyPair,
+    Ed25519KeyPair,
+    VerifyResult,
 )
 
 __all__ = [
     "__version__",
-    "generateRSAKeys",
-    "loadPublicKey", "encryptHybrid",
-    "loadPrivateKey", "decryptHybrid",
-    "encryptFileHybrid", "decryptFileHybrid", # type: ignore[reportUnsupportedDunderAll]
-    "create_zip_from_paths", "extract_zip_to_dir", # type: ignore[reportUnsupportedDunderAll]
-    "read_binary_file", "write_binary_file", # type: ignore[reportUnsupportedDunderAll]
-    "detect_mime_type", "hash_file", # type: ignore[reportUnsupportedDunderAll]
-    "collect_metadata", "save_encrypted_json", # type: ignore[reportUnsupportedDunderAll]
-    "load_encrypted_json", # type: ignore[reportUnsupportedDunderAll]
-    "canonicalJsonBytes",
-    "canonical_json_bytes",
-    "generateEd25519Keys",
-    "fingerprintBytes",
-    "fingerprintPublicKey",
-    "signPayload",
-    "verifyPayload",
-] 
-
-def __getattr__(name):
-    """Importa bajo demanda para evitar errores de carga anticipada."""
-    if name in ("encryptFileHybrid", "decryptFileHybrid"):
-        from .file_crypto import encryptFileHybrid, decryptFileHybrid
-        return {"encryptFileHybrid": encryptFileHybrid,
-                "decryptFileHybrid": decryptFileHybrid}[name]
-
-    if name in (
-        "create_zip_from_paths", "extract_zip_to_dir",
-        "read_binary_file", "write_binary_file",
-        "detect_mime_type", "hash_file",
-        "collect_metadata", "save_encrypted_json", "load_encrypted_json",
-    ):
-        from .core import (
-            create_zip_from_paths, extract_zip_to_dir,
-            read_binary_file, write_binary_file,
-            detect_mime_type, hash_file,
-            collect_metadata, save_encrypted_json, load_encrypted_json,
-        )
-        return {
-            "create_zip_from_paths": create_zip_from_paths,
-            "extract_zip_to_dir": extract_zip_to_dir,
-            "read_binary_file": read_binary_file,
-            "write_binary_file": write_binary_file,
-            "detect_mime_type": detect_mime_type,
-            "hash_file": hash_file,
-            "collect_metadata": collect_metadata,
-            "save_encrypted_json": save_encrypted_json,
-            "load_encrypted_json": load_encrypted_json,
-        }[name]
-
-    raise AttributeError(f"module {__name__} has no attribute {name!r}")
+    "CrossCryptoError",
+    "CrossCryptoErrorCode",
+    "PROTOCOL_VERSION",
+    "JWE_ALG",
+    "JWE_ENC",
+    "JWE_TYP",
+    "JWS_ALG",
+    "JWS_TYP",
+    "JweEnvelope",
+    "JweProtectedHeader",
+    "JwsEnvelope",
+    "JwsProtectedHeader",
+    "KeyPair",
+    "RsaKeyPair",
+    "Ed25519KeyPair",
+    "DecryptResult",
+    "VerifyResult",
+    "CcencDecryptResult",
+    "CcencHeader",
+    "generate_rsa_key_pair",
+    "generate_ed25519_key_pair",
+    "key_id_from_public_key",
+    "encrypt_ccenc_bytes",
+    "decrypt_ccenc_bytes",
+    "encrypt_file",
+    "decrypt_file",
+    "read_ccenc_header",
+    "read_ccenc_file_header",
+    "encrypt_bytes",
+    "decrypt_bytes",
+    "read_jwe_protected_header",
+    "sign_bytes",
+    "verify_bytes",
+    "is_valid_signature",
+    "read_jws_protected_header",
+    "encrypt_json",
+    "decrypt_json",
+    "encrypt_text",
+    "decrypt_text",
+    "sign_json",
+    "verify_json",
+    "sign_text",
+    "verify_text",
+]

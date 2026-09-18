@@ -1,3 +1,5 @@
 include README.md
 include LICENSE
-recursive-include cross_crypto_py *.pyi
+include CHANGELOG.md
+include cross_crypto_py/py.typed
+recursive-include docs *.md
